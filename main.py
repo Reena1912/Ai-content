@@ -4,6 +4,9 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from typing import Literal
 import os
+import psycopg2
+import psycopg2.extras
+from datetime import datetime
 from groq import Groq
 
 # Load environment variables
@@ -11,6 +14,48 @@ load_dotenv()
 
 app = FastAPI()
 
+
+# ── Database ──────────────────────────────────────────────────
+def get_db():
+    return psycopg2.connect(os.getenv("DATABASE_URL"))
+
+
+def init_db():
+    """Create the generations table if it doesn't exist."""
+    conn = get_db()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS generations (
+                    id         SERIAL PRIMARY KEY,
+                    platform   TEXT        NOT NULL,
+                    input_text TEXT        NOT NULL,
+                    output_text TEXT       NOT NULL,
+                    created_at TIMESTAMP   DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def save_generation(platform: str, input_text: str, output_text: str):
+    conn = get_db()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO generations (platform, input_text, output_text) VALUES (%s, %s, %s)",
+                (platform, input_text, output_text)
+            )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+@app.on_event("startup")
+def startup():
+    init_db()
+  
 
 #allows the HTML file to talk to FastAPI
 app.add_middleware(
@@ -116,7 +161,26 @@ def repurpose_content(article: str, platform: str):
 @app.post("/repurpose")
 def repurpose_endpoint(request: ArticleRequest):
     result = repurpose_content(request.article, request.platform)
+    save_generation(request.platform, request.article, result)
     return {
         "platform": request.platform,
         "repurposed_content": result
     }
+
+
+@app.get("/history")
+def get_history(limit: int = 20):
+    conn = get_db()
+    try:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+            cur.execute(
+                """SELECT id, platform, input_text, output_text, created_at
+                   FROM generations
+                   ORDER BY created_at DESC
+                   LIMIT %s""",
+                (limit,)
+            )
+            rows = cur.fetchall()
+        return {"history": [dict(r) for r in rows]}
+    finally:
+        conn.close()
