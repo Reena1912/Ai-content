@@ -1,5 +1,8 @@
-fastapi>=0.100.0
-uvicorn>=0.23.0
-groq>=0.4.0
-psycopg2-binary>=2.9.0
-python-dotenv>=1.0.0
+fastapi
+uvicorn
+psycopg2-binary
+python-dotenv
+groq
+bcrypt==4.0.1
+python-jose[cryptography]
+python-multipart

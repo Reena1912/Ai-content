@@ -143,7 +143,55 @@ CREATE TABLE generations (
     output_text TEXT NOT NULL,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE users (
+  id            SERIAL PRIMARY KEY,
+  email         TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
+
+---
+
+## Quick Commands Reference
+
+### Start the Server
+
+```powershell
+.\venv\Scripts\activate
+uvicorn main:app --reload
+```
+
+### Register a User
+
+```powershell
+curl -Method POST "http://127.0.0.1:8000/register" \
+  -Headers @{"Content-Type"="application/json"} \
+  -Body '{"email":"you@example.com","password":"yourpass123"}'
+```
+
+### Login
+
+```powershell
+curl -Method POST "http://127.0.0.1:8000/login" \
+  -Headers @{"Content-Type"="application/json"} \
+  -Body '{"email":"you@example.com","password":"yourpass123"}'
+```
+
+### View API Documentation
+
+Open `http://127.0.0.1:8000/docs` in your browser.
+
+### Authentication Endpoints
+
+| Method | Endpoint    | Description                            |
+| ------ | ----------- | -------------------------------------- |
+| `POST` | `/register` | Register new user                      |
+| `POST` | `/login`    | Login and get JWT token                |
+| `GET`  | `/me`       | Get current user info (requires token) |
+
+`/repurpose` and `/history` now also require a Bearer token.
 
 ---
 

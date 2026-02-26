@@ -4,72 +4,294 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Repurpose</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0e0e0e;
-    --surface: #161616;
-    --border: #2a2a2a;
-    --text: #e8e8e8;
-    --muted: #666;
-    --accent: #c8f564;
-    --font-mono: 'DM Mono', monospace;
-    --font-sans: 'DM Sans', sans-serif;
+    --bg: #0a0a0b;
+    --surface: #141416;
+    --surface-2: #1c1c1f;
+    --border: #2a2a2e;
+    --text: #fafafa;
+    --muted: #71717a;
+    --accent: #8b5cf6;
+    --accent-hover: #a78bfa;
+    --success: #22c55e;
+    --warning: #eab308;
+    --error: #ef4444;
+    --font: 'Inter', -apple-system, sans-serif;
   }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: var(--font-sans);
+    font-family: var(--font);
     min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr;
   }
+
+  /* ── Auth Page ── */
+  .auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--bg) 0%, #0f0f12 100%);
+  }
+
+  .auth-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+  }
+
+  .auth-logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .auth-logo span {
+    background: linear-gradient(135deg, var(--accent), #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .auth-subtitle {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-bottom: 2rem;
+  }
+
+  .auth-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    background: var(--surface-2);
+    padding: 4px;
+    border-radius: 10px;
+  }
+
+  .auth-tab {
+    flex: 1;
+    padding: 0.75rem;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .auth-tab.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  .auth-tab:not(.active):hover {
+    color: var(--text);
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+
+  .form-input::placeholder { color: var(--muted); }
+
+  /* Password Strength */
+  .password-strength {
+    margin-top: 0.75rem;
+  }
+
+  .strength-bar {
+    height: 4px;
+    background: var(--surface-2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  .strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .strength-fill.weak { width: 33%; background: var(--error); }
+  .strength-fill.medium { width: 66%; background: var(--warning); }
+  .strength-fill.strong { width: 100%; background: var(--success); }
+
+  .strength-checks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.25rem;
+  }
+
+  .strength-check {
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .strength-check.pass { color: var(--success); }
+  .strength-check svg { width: 12px; height: 12px; }
+
+  .auth-btn {
+    width: 100%;
+    padding: 0.875rem;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .auth-btn:hover { background: var(--accent-hover); }
+  .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .auth-error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--error);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  /* ── App Layout ── */
+  .app-container {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .app-container.active { display: flex; }
+  .auth-container.hidden { display: none; }
 
   header {
-    padding: 2rem 3rem;
+    padding: 1.25rem 2rem;
     border-bottom: 1px solid var(--border);
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 1rem;
+    background: var(--surface);
   }
 
-  header h1 {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
+  .header-logo {
+    font-size: 1.1rem;
+    font-weight: 600;
     color: var(--accent);
   }
 
-  header span {
-    font-size: 0.75rem;
-    color: var(--muted);
-    font-family: var(--font-mono);
+  .header-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
   }
 
+  .header-user {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .header-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .header-btn {
+    padding: 0.5rem 1rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 0.8rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+
+  .header-btn:hover { border-color: #444; }
+  .header-btn.logout { color: var(--error); }
+
   main {
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 61px);
   }
 
   .panel {
-    padding: 2rem 3rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
+    overflow: hidden;
   }
 
   .panel-left {
     border-right: 1px solid var(--border);
+    background: var(--surface);
   }
 
-  label {
+  .panel-right {
+    background: var(--bg);
+  }
+
+  .panel-label {
     font-size: 0.7rem;
-    font-family: var(--font-mono);
+    font-weight: 600;
     color: var(--muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -77,39 +299,39 @@
 
   textarea {
     flex: 1;
-    background: var(--surface);
+    background: var(--surface-2);
     border: 1px solid var(--border);
     color: var(--text);
-    font-family: var(--font-sans);
+    font-family: var(--font);
     font-size: 0.875rem;
-    line-height: 1.6;
-    padding: 1rem;
+    line-height: 1.7;
+    padding: 1rem 1.25rem;
     resize: none;
     outline: none;
-    border-radius: 4px;
+    border-radius: 12px;
     transition: border-color 0.2s;
   }
 
-  textarea:focus { border-color: #444; }
+  textarea:focus { border-color: var(--accent); }
   textarea::placeholder { color: var(--muted); }
 
   .platform-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
 
   .platform-btn {
-    background: transparent;
+    background: var(--surface-2);
     border: 1px solid var(--border);
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    padding: 0.5rem 0.25rem;
+    font-family: var(--font);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.6rem 1rem;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 8px;
     transition: all 0.15s;
-    letter-spacing: 0.05em;
   }
 
   .platform-btn:hover { border-color: #444; color: var(--text); }
@@ -117,40 +339,48 @@
   .platform-btn.active {
     border-color: var(--accent);
     color: var(--accent);
-    background: rgba(200, 245, 100, 0.05);
+    background: rgba(139, 92, 246, 0.1);
   }
 
   .submit-btn {
     background: var(--accent);
     border: none;
-    color: #0e0e0e;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+    color: white;
+    font-family: var(--font);
+    font-size: 0.9rem;
     font-weight: 500;
-    padding: 0.8rem 1.5rem;
+    padding: 0.9rem 1.5rem;
     cursor: pointer;
-    border-radius: 3px;
-    letter-spacing: 0.08em;
-    transition: opacity 0.15s, transform 0.1s;
-    align-self: flex-start;
+    border-radius: 10px;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
 
-  .submit-btn:hover { opacity: 0.9; }
-  .submit-btn:active { transform: scale(0.98); }
-  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .submit-btn:hover { background: var(--accent-hover); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .submit-btn svg { width: 18px; height: 18px; }
+
+  .output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .output-area {
     flex: 1;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1rem;
+    border-radius: 12px;
+    padding: 1.25rem;
     overflow-y: auto;
     font-size: 0.875rem;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--text);
     white-space: pre-wrap;
-    font-family: var(--font-sans);
   }
 
   .output-area.empty {
@@ -158,141 +388,126 @@
     align-items: center;
     justify-content: center;
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
 
   .loading {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
+    gap: 0.5rem;
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
 
-  .dot {
-    width: 4px; height: 4px;
-    background: var(--accent);
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
     border-radius: 50%;
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-  .dot:nth-child(2) { animation-delay: 0.2s; }
-  .dot:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes pulse {
-    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
-    40% { opacity: 1; transform: scale(1); }
+    animation: spin 0.8s linear infinite;
   }
 
-  .error { color: #ff6b6b; font-family: var(--font-mono); font-size: 0.8rem; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   .copy-btn {
-    background: transparent;
+    background: var(--surface-2);
     border: 1px solid var(--border);
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-family: var(--font);
+    font-size: 0.75rem;
     padding: 0.4rem 0.75rem;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 6px;
     transition: all 0.15s;
-    align-self: flex-end;
   }
+
   .copy-btn:hover { border-color: #444; color: var(--text); }
-  .copy-btn.copied { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied { border-color: var(--success); color: var(--success); }
 
-  /* ── History ── */
-  .history-btn {
-    margin-left: auto;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    padding: 0.4rem 0.9rem;
-    cursor: pointer;
-    border-radius: 3px;
-    letter-spacing: 0.08em;
-    transition: all 0.15s;
-  }
-  .history-btn:hover { border-color: #444; color: var(--text); }
-
+  /* ── History Drawer ── */
   .history-drawer {
     position: fixed;
     top: 0; right: -480px;
-    width: 460px;
+    width: 440px;
     height: 100vh;
-    background: #111;
+    background: var(--surface);
     border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     transition: right 0.3s ease;
     z-index: 100;
   }
+
   .history-drawer.open { right: 0; }
 
   .history-header {
-    padding: 1.5rem 2rem;
+    padding: 1.25rem 1.5rem;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   .history-header span {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
   }
+
   .history-close {
     background: none; border: none;
-    color: var(--muted); font-size: 1.2rem;
+    color: var(--muted); font-size: 1.4rem;
     cursor: pointer; line-height: 1;
   }
+
   .history-close:hover { color: var(--text); }
 
   .history-list {
     flex: 1;
     overflow-y: auto;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
   }
+
   .history-item {
-    padding: 1rem 2rem;
-    border-bottom: 1px solid #1e1e1e;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: background 0.1s;
   }
-  .history-item:hover { background: #161616; }
+
+  .history-item:hover { background: var(--surface-2); }
+
   .history-meta {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.4rem;
   }
+
   .history-platform {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     color: var(--accent);
-    letter-spacing: 0.1em;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
+
   .history-time {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     color: var(--muted);
   }
+
   .history-preview {
     font-size: 0.8rem;
-    color: #888;
+    color: var(--muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   .history-empty {
-    padding: 3rem 2rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+    padding: 3rem 1.5rem;
+    font-size: 0.85rem;
     color: var(--muted);
     text-align: center;
   }
@@ -300,66 +515,314 @@
   @media (max-width: 768px) {
     main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; height: auto; }
     .panel-left { border-right: none; border-bottom: 1px solid var(--border); }
-    header { padding: 1.25rem 1.5rem; }
-    .panel { padding: 1.5rem; }
-    .platform-grid { grid-template-columns: repeat(3, 1fr); }
+    header { padding: 1rem; }
+    .panel { padding: 1.25rem; }
+    .auth-card { padding: 1.5rem; margin: 1rem; }
     .history-drawer { width: 100%; right: -100%; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>repurpose_</h1>
-  <span>content transformation tool</span>
-  <button class="history-btn" id="historyBtn">history</button>
-</header>
+<!-- Auth Container -->
+<div class="auth-container" id="authContainer">
+  <div class="auth-card">
+    <div class="auth-logo"><span>repurpose</span></div>
+    <p class="auth-subtitle">Transform your content for any platform</p>
 
-<!-- History Drawer -->
-<div class="history-drawer" id="historyDrawer">
-  <div class="history-header">
-    <span>generation_history</span>
-    <button class="history-close" id="historyClose">&times;</button>
-  </div>
-  <div class="history-list" id="historyList">
-    <div class="history-empty">loading...</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="register">Create Account</button>
+    </div>
+
+    <div class="auth-error" id="authError"></div>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" id="loginEmail" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="auth-btn" id="loginBtn">Sign In</button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" id="registerEmail" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="registerPassword" placeholder="••••••••" required>
+        <div class="password-strength" id="passwordStrength" style="display:none;">
+          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+          <div class="strength-checks">
+            <span class="strength-check" id="checkLength">
+              <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="4"/></svg>
+              8+ characters
+            </span>
+            <span class="strength-check" id="checkUpper">
+              <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="4"/></svg>
+              Uppercase
+            </span>
+            <span class="strength-check" id="checkLower">
+              <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="4"/></svg>
+              Lowercase
+            </span>
+            <span class="strength-check" id="checkDigit">
+              <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="4"/></svg>
+              Number
+            </span>
+            <span class="strength-check" id="checkSpecial">
+              <svg viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="4"/></svg>
+              Special char
+            </span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="auth-btn" id="registerBtn">Create Account</button>
+    </form>
   </div>
 </div>
 
-<main>
-  <div class="panel panel-left">
-    <label>Article / Source</label>
-    <textarea id="article" placeholder="Paste your article or content here..."></textarea>
+<!-- App Container -->
+<div class="app-container" id="appContainer">
+  <header>
+    <span class="header-logo">repurpose</span>
+    <div class="header-divider"></div>
+    <span class="header-user" id="userEmail"></span>
+    <div class="header-actions">
+      <button class="header-btn" id="historyBtn">History</button>
+      <button class="header-btn logout" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
 
-    <div>
-      <label style="display:block;margin-bottom:0.75rem;">Platform</label>
-      <div class="platform-grid">
-        <button class="platform-btn active" data-platform="twitter">Twitter</button>
-        <button class="platform-btn" data-platform="linkedin">LinkedIn</button>
-        <button class="platform-btn" data-platform="instagram">Instagram</button>
-        <button class="platform-btn" data-platform="newsletter">Newsletter</button>
-        <button class="platform-btn" data-platform="medium">Medium</button>
+  <!-- History Drawer -->
+  <div class="history-drawer" id="historyDrawer">
+    <div class="history-header">
+      <span>Generation History</span>
+      <button class="history-close" id="historyClose">&times;</button>
+    </div>
+    <div class="history-list" id="historyList">
+      <div class="history-empty">Loading...</div>
+    </div>
+  </div>
+
+  <main>
+    <div class="panel panel-left">
+      <label class="panel-label">Source Content</label>
+      <textarea id="article" placeholder="Paste your article or content here..."></textarea>
+
+      <div>
+        <label class="panel-label" style="display:block;margin-bottom:0.75rem;">Target Platform</label>
+        <div class="platform-grid">
+          <button class="platform-btn active" data-platform="twitter">Twitter</button>
+          <button class="platform-btn" data-platform="linkedin">LinkedIn</button>
+          <button class="platform-btn" data-platform="instagram">Instagram</button>
+          <button class="platform-btn" data-platform="newsletter">Newsletter</button>
+          <button class="platform-btn" data-platform="medium">Medium</button>
+        </div>
       </div>
+
+      <button class="submit-btn" id="submitBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+        Repurpose Content
+      </button>
     </div>
 
-    <button class="submit-btn" id="submitBtn">→ REPURPOSE</button>
-  </div>
-
-  <div class="panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <label>Output</label>
-      <button class="copy-btn" id="copyBtn" style="display:none;">copy</button>
+    <div class="panel panel-right">
+      <div class="output-header">
+        <label class="panel-label">Output</label>
+        <button class="copy-btn" id="copyBtn" style="display:none;">Copy</button>
+      </div>
+      <div class="output-area empty" id="output">Awaiting input...</div>
     </div>
-    <div class="output-area empty" id="output">awaiting input</div>
-  </div>
-</main>
+  </main>
+</div>
 
 <script>
   const API_URL = 'http://localhost:8000';
+  let token = localStorage.getItem('token');
+  let userEmail = localStorage.getItem('userEmail');
   let selectedPlatform = 'twitter';
   let outputContent = '';
 
-  // Platform selection
+  // ── Auth ──────────────────────────────────────────────────
+  function showApp() {
+    document.getElementById('authContainer').classList.add('hidden');
+    document.getElementById('appContainer').classList.add('active');
+    document.getElementById('userEmail').textContent = userEmail;
+  }
+
+  function showAuth() {
+    document.getElementById('authContainer').classList.remove('hidden');
+    document.getElementById('appContainer').classList.remove('active');
+  }
+
+  function showError(msg) {
+    const err = document.getElementById('authError');
+    err.textContent = msg;
+    err.style.display = 'block';
+  }
+
+  function hideError() {
+    document.getElementById('authError').style.display = 'none';
+  }
+
+  // Tab switching
+  document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      hideError();
+      if (tab.dataset.tab === 'login') {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('registerForm').style.display = 'none';
+      } else {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+      }
+    });
+  });
+
+  // Password strength checker
+  const registerPassword = document.getElementById('registerPassword');
+  registerPassword.addEventListener('input', async () => {
+    const pwd = registerPassword.value;
+    const strengthEl = document.getElementById('passwordStrength');
+
+    if (!pwd) {
+      strengthEl.style.display = 'none';
+      return;
+    }
+
+    strengthEl.style.display = 'block';
+
+    try {
+      const res = await fetch(`${API_URL}/check-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pwd })
+      });
+      const data = await res.json();
+
+      const fill = document.getElementById('strengthFill');
+      fill.className = 'strength-fill ' + data.strength;
+
+      const checkMap = {
+        checkLength: data.checks.length,
+        checkUpper: data.checks.uppercase,
+        checkLower: data.checks.lowercase,
+        checkDigit: data.checks.digit,
+        checkSpecial: data.checks.special
+      };
+
+      Object.entries(checkMap).forEach(([id, pass]) => {
+        const el = document.getElementById(id);
+        if (pass) el.classList.add('pass');
+        else el.classList.remove('pass');
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+  // Login
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+
+    try {
+      const res = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: document.getElementById('loginEmail').value,
+          password: document.getElementById('loginPassword').value
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || 'Login failed');
+      }
+
+      const data = await res.json();
+      token = data.token;
+      userEmail = data.email;
+      localStorage.setItem('token', token);
+      localStorage.setItem('userEmail', userEmail);
+      showApp();
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+    }
+  });
+
+  // Register
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+    const btn = document.getElementById('registerBtn');
+    btn.disabled = true;
+    btn.textContent = 'Creating account...';
+
+    try {
+      const res = await fetch(`${API_URL}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: document.getElementById('registerEmail').value,
+          password: document.getElementById('registerPassword').value
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || 'Registration failed');
+      }
+
+      const data = await res.json();
+      token = data.token;
+      userEmail = data.email;
+      localStorage.setItem('token', token);
+      localStorage.setItem('userEmail', userEmail);
+      showApp();
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Create Account';
+    }
+  });
+
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    token = null;
+    userEmail = null;
+    localStorage.removeItem('token');
+    localStorage.removeItem('userEmail');
+    showAuth();
+  });
+
+  // Check if logged in
+  if (token && userEmail) {
+    showApp();
+  }
+
+  // ── Platform Selection ────────────────────────────────────
   document.querySelectorAll('.platform-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
@@ -368,7 +831,7 @@
     });
   });
 
-  // Submit
+  // ── Submit ────────────────────────────────────────────────
   document.getElementById('submitBtn').addEventListener('click', async () => {
     const article = document.getElementById('article').value.trim();
     if (!article) return;
@@ -380,14 +843,22 @@
     btn.disabled = true;
     copyBtn.style.display = 'none';
     output.className = 'output-area';
-    output.innerHTML = `<div class="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+    output.innerHTML = `<div class="loading"><div class="spinner"></div><span>Generating content...</span></div>`;
 
     try {
       const res = await fetch(`${API_URL}/repurpose`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ article, platform: selectedPlatform })
       });
+
+      if (res.status === 401) {
+        showAuth();
+        throw new Error('Session expired. Please sign in again.');
+      }
 
       if (!res.ok) {
         const err = await res.json();
@@ -402,19 +873,19 @@
 
     } catch (err) {
       output.className = 'output-area';
-      output.innerHTML = `<span class="error">Error: ${err.message}</span>`;
+      output.innerHTML = `<span style="color:var(--error)">Error: ${err.message}</span>`;
     } finally {
       btn.disabled = false;
     }
   });
 
-  // Copy
+  // ── Copy ──────────────────────────────────────────────────
   document.getElementById('copyBtn').addEventListener('click', function() {
     navigator.clipboard.writeText(outputContent).then(() => {
-      this.textContent = 'copied!';
+      this.textContent = 'Copied!';
       this.classList.add('copied');
       setTimeout(() => {
-        this.textContent = 'copy';
+        this.textContent = 'Copy';
         this.classList.remove('copied');
       }, 1500);
     });
@@ -427,9 +898,9 @@
     }
   });
 
-  // ── History ──────────────────────────────────────────────
+  // ── History ───────────────────────────────────────────────
   const historyDrawer = document.getElementById('historyDrawer');
-  const historyList   = document.getElementById('historyList');
+  const historyList = document.getElementById('historyList');
 
   function formatTime(iso) {
     const d = new Date(iso);
@@ -437,14 +908,23 @@
   }
 
   async function loadHistory() {
-    historyList.innerHTML = '<div class="history-empty">loading...</div>';
+    historyList.innerHTML = '<div class="history-empty">Loading...</div>';
     try {
-      const res = await fetch(`${API_URL}/history?limit=30`);
-      const data = await res.json();
-      if (!data.history.length) {
-        historyList.innerHTML = '<div class="history-empty">no generations yet</div>';
+      const res = await fetch(`${API_URL}/history?limit=30`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (res.status === 401) {
+        showAuth();
         return;
       }
+
+      const data = await res.json();
+      if (!data.history.length) {
+        historyList.innerHTML = '<div class="history-empty">No generations yet</div>';
+        return;
+      }
+
       historyList.innerHTML = data.history.map(item => `
         <div class="history-item" data-output="${escapeHtml(item.output_text)}" data-platform="${item.platform}">
           <div class="history-meta">
@@ -455,7 +935,6 @@
         </div>
       `).join('');
 
-      // Click item to load its output
       historyList.querySelectorAll('.history-item').forEach(el => {
         el.addEventListener('click', () => {
           const output = document.getElementById('output');
@@ -467,7 +946,7 @@
         });
       });
     } catch (e) {
-      historyList.innerHTML = '<div class="history-empty">failed to load history</div>';
+      historyList.innerHTML = '<div class="history-empty">Failed to load history</div>';
     }
   }
 
