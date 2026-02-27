@@ -80,6 +80,7 @@ Create a `.env` file in the root folder:
 ```env
 GROQ_API_KEY=your_groq_api_key_here
 DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/repurposeai
+SECRET_KEY=your_secret_key_for_jwt_tokens
 ```
 
 ### 6. Run the backend
@@ -103,11 +104,14 @@ Open `index.html` directly in your browser (double-click or use VS Code Live Ser
 
 ## API Endpoints
 
-| Method | Endpoint     | Description                     |
-| ------ | ------------ | ------------------------------- |
-| `GET`  | `/`          | Health check                    |
-| `POST` | `/repurpose` | Generate content for a platform |
-| `GET`  | `/history`   | Get past generations            |
+| Method | Endpoint          | Description                     | Auth Required |
+| ------ | ----------------- | ------------------------------- | ------------- |
+| `GET`  | `/`               | Health check                    | No            |
+| `POST` | `/register`       | Register new user               | No            |
+| `POST` | `/login`          | Login and get JWT token         | No            |
+| `POST` | `/check-password` | Check password strength         | No            |
+| `POST` | `/repurpose`      | Generate content for a platform | Yes           |
+| `GET`  | `/history`        | Get past generations            | Yes           |
 
 ### POST `/repurpose`
 
@@ -136,19 +140,20 @@ Open `index.html` directly in your browser (double-click or use VS Code Live Ser
 ## Database Schema
 
 ```sql
+CREATE TABLE users (
+    id         SERIAL PRIMARY KEY,
+    email      TEXT UNIQUE NOT NULL,
+    password   TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE generations (
     id          SERIAL PRIMARY KEY,
+    user_id     INTEGER REFERENCES users(id),
     platform    TEXT NOT NULL,
     input_text  TEXT NOT NULL,
     output_text TEXT NOT NULL,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE users (
-  id            SERIAL PRIMARY KEY,
-  email         TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
-  created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
@@ -183,15 +188,15 @@ curl -Method POST "http://127.0.0.1:8000/login" \
 
 Open `http://127.0.0.1:8000/docs` in your browser.
 
-### Authentication Endpoints
+### Authentication
 
-| Method | Endpoint    | Description                            |
-| ------ | ----------- | -------------------------------------- |
-| `POST` | `/register` | Register new user                      |
-| `POST` | `/login`    | Login and get JWT token                |
-| `GET`  | `/me`       | Get current user info (requires token) |
+`/repurpose` and `/history` endpoints require a Bearer token in the Authorization header:
 
-`/repurpose` and `/history` now also require a Bearer token.
+```
+Authorization: Bearer <your_jwt_token>
+```
+
+Tokens expire after 24 hours.
 
 ---
 
@@ -210,11 +215,6 @@ ai-content/
 
 ---
 
-## Screenshots
-
-_Coming soon_
-
----
 
 ## License
 
