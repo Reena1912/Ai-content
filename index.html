@@ -3,366 +3,662 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Repurpose</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Repurpose - Transform Your Content</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0a0a0b;
-    --surface: #141416;
-    --surface-2: #1c1c1f;
-    --border: #2a2a2e;
-    --text: #fafafa;
-    --muted: #71717a;
-    --accent: #8b5cf6;
-    --accent-hover: #a78bfa;
-    --success: #22c55e;
-    --warning: #eab308;
-    --error: #ef4444;
-    --font: 'Inter', -apple-system, sans-serif;
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
+    --orange: #ff6b35;
+    --orange-light: #ff8c5a;
+    --orange-dark: #e55a2b;
+    --blue: #4a90e2;
+    --green: #2ecc71;
+    --font: 'Poppins', sans-serif;
   }
 
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--black);
+    color: var(--black);
     font-family: var(--font);
-    min-height: 100vh;
+    line-height: 1.6;
   }
 
-  /* ── Auth Page ── */
-  .auth-container {
+  /* ═══════════════════════════════════════════════════════
+     LANDING PAGE
+     ═══════════════════════════════════════════════════════ */
+  .landing-page {
+    min-height: 100vh;
+    background: var(--black);
+  }
+
+  .landing-page.hidden { display: none; }
+
+  /* Hero Section */
+  .hero-section {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    background: linear-gradient(135deg, var(--bg) 0%, #0f0f12 100%);
+    position: relative;
+    overflow: hidden;
   }
 
-  .auth-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.5rem;
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-card {
+    background: var(--white);
+    border-radius: 48px;
+    padding: 5rem;
+    max-width: 1200px;
     width: 100%;
-    max-width: 400px;
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--white);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--black);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--gray-600);
+    margin-bottom: 3rem;
+    max-width: 700px;
+    line-height: 1.7;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 1.25rem 2.5rem;
+    border-radius: 50px;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .btn-primary {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .btn-primary:hover {
+    background: var(--gray-800);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: var(--white);
+    color: var(--black);
+    border: 2px solid var(--black);
+  }
+
+  .btn-secondary:hover {
+    background: var(--gray-50);
+  }
+
+  /* Features Section */
+  .features-section {
+    padding: 8rem 2rem;
+    background: var(--white);
+  }
+
+  .features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: var(--black);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .feature-card {
+    background: var(--black);
+    color: var(--white);
+    padding: 3rem;
+    border-radius: 32px;
+    transition: transform 0.3s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .feature-desc {
+    color: var(--gray-400);
+    line-height: 1.7;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     AUTH MODAL
+     ═══════════════════════════════════════════════════════ */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .auth-modal {
+    background: var(--white);
+    border-radius: 32px;
+    padding: 3rem;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+  }
+
+  .auth-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: var(--gray-100);
+    border: none;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--gray-600);
+    transition: all 0.2s;
+  }
+
+  .auth-close:hover {
+    background: var(--gray-200);
+  }
+
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
   }
 
   .auth-logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--accent);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--black);
     margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .auth-logo span {
-    background: linear-gradient(135deg, var(--accent), #c084fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 
   .auth-subtitle {
-    color: var(--muted);
-    font-size: 0.875rem;
-    margin-bottom: 2rem;
+    color: var(--gray-600);
+    font-size: 0.95rem;
   }
 
   .auth-tabs {
     display: flex;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    background: var(--surface-2);
-    padding: 4px;
-    border-radius: 10px;
+    margin-bottom: 2rem;
+    background: var(--gray-100);
+    padding: 6px;
+    border-radius: 16px;
   }
 
   .auth-tab {
     flex: 1;
-    padding: 0.75rem;
+    padding: 0.875rem;
     background: transparent;
     border: none;
-    color: var(--muted);
+    color: var(--gray-600);
     font-family: var(--font);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.2s;
+    border-radius: 12px;
+    transition: all 0.3s;
   }
 
   .auth-tab.active {
-    background: var(--accent);
-    color: white;
-  }
-
-  .auth-tab:not(.active):hover {
-    color: var(--text);
+    background: var(--black);
+    color: var(--white);
   }
 
   .form-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 
   .form-label {
     display: block;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-700);
     margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
   }
 
   .form-input {
     width: 100%;
-    padding: 0.875rem 1rem;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text);
+    padding: 1rem 1.25rem;
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 16px;
+    color: var(--black);
     font-family: var(--font);
-    font-size: 0.9rem;
-    transition: all 0.2s;
+    font-size: 0.95rem;
+    transition: all 0.3s;
   }
 
   .form-input:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    border-color: var(--orange);
+    background: var(--white);
   }
 
-  .form-input::placeholder { color: var(--muted); }
+  .auth-btn {
+    width: 100%;
+    padding: 1.125rem;
+    background: var(--orange);
+    border: none;
+    border-radius: 16px;
+    color: var(--white);
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+  }
+
+  .auth-btn:hover {
+    background: var(--orange-dark);
+    transform: translateY(-2px);
+  }
+
+  .auth-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .auth-error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px solid #ef4444;
+    color: #ef4444;
+    padding: 0.875rem 1.25rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    display: none;
+  }
 
   /* Password Strength */
   .password-strength {
-    margin-top: 0.75rem;
+    margin-top: 1rem;
   }
 
   .strength-bar {
-    height: 4px;
-    background: var(--surface-2);
-    border-radius: 2px;
+    height: 6px;
+    background: var(--gray-200);
+    border-radius: 3px;
     overflow: hidden;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .strength-fill {
     height: 100%;
     width: 0%;
-    border-radius: 2px;
+    border-radius: 3px;
     transition: all 0.3s;
   }
 
-  .strength-fill.weak { width: 33%; background: var(--error); }
-  .strength-fill.medium { width: 66%; background: var(--warning); }
-  .strength-fill.strong { width: 100%; background: var(--success); }
+  .strength-fill.weak { width: 33%; background: #ef4444; }
+  .strength-fill.medium { width: 66%; background: #f59e0b; }
+  .strength-fill.strong { width: 100%; background: var(--green); }
 
   .strength-checks {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.25rem;
+    gap: 0.5rem;
   }
 
   .strength-check {
-    font-size: 0.75rem;
-    color: var(--muted);
+    font-size: 0.8rem;
+    color: var(--gray-500);
     display: flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.5rem;
   }
 
-  .strength-check.pass { color: var(--success); }
-  .strength-check svg { width: 12px; height: 12px; }
+  .strength-check.pass { color: var(--green); }
+  .strength-check svg { width: 14px; height: 14px; }
 
-  .auth-btn {
-    width: 100%;
-    padding: 0.875rem;
-    background: var(--accent);
-    border: none;
-    border-radius: 10px;
-    color: white;
-    font-family: var(--font);
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 0.5rem;
-  }
-
-  .auth-btn:hover { background: var(--accent-hover); }
-  .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .auth-error {
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: var(--error);
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    margin-bottom: 1rem;
-    display: none;
-  }
-
-  /* ── App Layout ── */
-  .app-container {
+  /* ═══════════════════════════════════════════════════════
+     DASHBOARD
+     ═══════════════════════════════════════════════════════ */
+  .dashboard {
     display: none;
     min-height: 100vh;
-    flex-direction: column;
+    background: var(--black);
+    padding: 2rem;
   }
 
-  .app-container.active { display: flex; }
-  .auth-container.hidden { display: none; }
+  .dashboard.active { display: block; }
 
-  header {
-    padding: 1.25rem 2rem;
-    border-bottom: 1px solid var(--border);
+  .dashboard-header {
+    max-width: 1400px;
+    margin: 0 auto 2rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    background: var(--surface);
+    justify-content: space-between;
+    padding: 1.5rem 0;
   }
 
-  .header-logo {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--accent);
+  .dashboard-logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--white);
   }
 
-  .header-divider {
-    width: 1px;
-    height: 20px;
-    background: var(--border);
+  .dashboard-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
   }
 
-  .header-user {
-    font-size: 0.8rem;
-    color: var(--muted);
+  .dashboard-user {
+    color: var(--gray-400);
+    font-size: 0.9rem;
   }
 
-  .header-actions {
-    margin-left: auto;
+  .dashboard-actions {
     display: flex;
     gap: 0.75rem;
   }
 
-  .header-btn {
-    padding: 0.5rem 1rem;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--text);
+  .dashboard-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    border-radius: 12px;
     font-family: var(--font);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.15s;
+    transition: all 0.3s;
   }
 
-  .header-btn:hover { border-color: #444; }
-  .header-btn.logout { color: var(--error); }
+  .dashboard-btn:hover {
+    background: var(--gray-200);
+  }
 
-  main {
-    flex: 1;
+  .dashboard-btn.logout {
+    background: transparent;
+    border: 2px solid var(--gray-800);
+    color: var(--white);
+  }
+
+  .dashboard-btn.logout:hover {
+    border-color: var(--gray-700);
+    background: var(--gray-900);
+  }
+
+  .dashboard-main {
+    max-width: 1400px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: calc(100vh - 61px);
+    gap: 2rem;
   }
 
-  .panel {
-    padding: 2rem;
+  /* Input Card */
+  .input-card {
+    background: var(--white);
+    border-radius: 32px;
+    padding: 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    overflow: hidden;
+    gap: 2rem;
   }
 
-  .panel-left {
-    border-right: 1px solid var(--border);
-    background: var(--surface);
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .panel-right {
-    background: var(--bg);
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--black);
   }
 
-  .panel-label {
-    font-size: 0.7rem;
+  .char-counter {
+    font-size: 0.875rem;
+    color: var(--gray-500);
     font-weight: 600;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  }
+
+  .char-counter.warning { color: var(--orange); }
+  .char-counter.error { color: #ef4444; }
+
+  .quick-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .quick-btn {
+    padding: 0.75rem 1.25rem;
+    background: var(--gray-100);
+    border: none;
+    border-radius: 12px;
+    color: var(--black);
+    font-family: var(--font);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .quick-btn:hover {
+    background: var(--gray-200);
+  }
+
+  .quick-btn svg {
+    width: 16px;
+    height: 16px;
   }
 
   textarea {
     flex: 1;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--text);
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    color: var(--black);
     font-family: var(--font);
-    font-size: 0.875rem;
+    font-size: 0.95rem;
     line-height: 1.7;
-    padding: 1rem 1.25rem;
+    padding: 1.5rem;
     resize: none;
     outline: none;
-    border-radius: 12px;
-    transition: border-color 0.2s;
+    border-radius: 16px;
+    transition: all 0.3s;
+    min-height: 300px;
   }
 
-  textarea:focus { border-color: var(--accent); }
-  textarea::placeholder { color: var(--muted); }
+  textarea:focus {
+    border-color: var(--orange);
+    background: var(--white);
+  }
+
+  .platform-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .section-label {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--black);
+  }
 
   .platform-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
   }
 
   .platform-btn {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--muted);
+    background: var(--gray-100);
+    border: 3px solid transparent;
+    color: var(--black);
     font-family: var(--font);
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 1.25rem 0.75rem;
     cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.15s;
-  }
-
-  .platform-btn:hover { border-color: #444; color: var(--text); }
-
-  .platform-btn.active {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(139, 92, 246, 0.1);
-  }
-
-  .submit-btn {
-    background: var(--accent);
-    border: none;
-    color: white;
-    font-family: var(--font);
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 0.9rem 1.5rem;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: all 0.15s;
+    border-radius: 16px;
+    transition: all 0.3s;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 0.5rem;
   }
 
-  .submit-btn:hover { background: var(--accent-hover); }
-  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .platform-btn .icon {
+    font-size: 2rem;
+  }
 
-  .submit-btn svg { width: 18px; height: 18px; }
+  .platform-btn:hover {
+    background: var(--gray-200);
+    transform: translateY(-2px);
+  }
+
+  .platform-btn.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--orange);
+  }
+
+  .platform-info {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+    text-align: center;
+  }
+
+  .submit-btn {
+    background: var(--orange);
+    border: none;
+    color: var(--white);
+    font-family: var(--font);
+    font-size: 1.125rem;
+    font-weight: 700;
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .submit-btn:hover {
+    background: var(--orange-dark);
+    transform: translateY(-2px);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .submit-btn svg { width: 24px; height: 24px; }
+
+  /* Output Card */
+  .output-card {
+    background: var(--gray-900);
+    border-radius: 32px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    color: var(--white);
+  }
 
   .output-header {
     display: flex;
@@ -370,174 +666,353 @@
     align-items: center;
   }
 
+  .output-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .output-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .output-btn {
+    padding: 0.75rem 1.25rem;
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .output-btn:hover {
+    background: var(--gray-200);
+  }
+
+  .output-btn.copied {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .output-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
   .output-area {
     flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
+    background: var(--black);
+    border-radius: 16px;
+    padding: 2rem;
     overflow-y: auto;
-    font-size: 0.875rem;
+    font-size: 0.95rem;
     line-height: 1.8;
-    color: var(--text);
+    color: var(--white);
     white-space: pre-wrap;
+    min-height: 400px;
   }
 
   .output-area.empty {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--muted);
-    font-size: 0.85rem;
+    color: var(--gray-600);
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+  }
+
+  .empty-text {
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  .output-stats {
+    display: flex;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: var(--black);
+    border-radius: 16px;
+  }
+
+  .stat {
+    flex: 1;
+    text-align: center;
+  }
+
+  .stat-label {
+    color: var(--gray-500);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-value {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.5rem;
   }
 
   .loading {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    color: var(--muted);
-    font-size: 0.85rem;
+    gap: 1rem;
   }
 
   .spinner {
-    width: 20px; height: 20px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
+    width: 40px; height: 40px;
+    border: 4px solid var(--gray-800);
+    border-top-color: var(--orange);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .copy-btn {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: var(--font);
-    font-size: 0.75rem;
-    padding: 0.4rem 0.75rem;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: all 0.15s;
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
   }
 
-  .copy-btn:hover { border-color: #444; color: var(--text); }
-  .copy-btn.copied { border-color: var(--success); color: var(--success); }
+  .shake {
+    animation: shake 0.5s;
+  }
 
-  /* ── History Drawer ── */
+  /* History Drawer */
   .history-drawer {
     position: fixed;
-    top: 0; right: -480px;
-    width: 440px;
+    top: 0; right: -500px;
+    width: 480px;
     height: 100vh;
-    background: var(--surface);
-    border-left: 1px solid var(--border);
+    background: var(--white);
     display: flex;
     flex-direction: column;
-    transition: right 0.3s ease;
-    z-index: 100;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 150;
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
   }
 
   .history-drawer.open { right: 0; }
 
   .history-header {
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border);
+    padding: 2rem;
+    border-bottom: 2px solid var(--gray-200);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .history-header span {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text);
+  .history-header h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
   }
 
   .history-close {
-    background: none; border: none;
-    color: var(--muted); font-size: 1.4rem;
-    cursor: pointer; line-height: 1;
+    background: var(--gray-100);
+    border: none;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--gray-600);
+    transition: all 0.3s;
   }
 
-  .history-close:hover { color: var(--text); }
+  .history-close:hover {
+    background: var(--gray-200);
+  }
 
   .history-list {
     flex: 1;
     overflow-y: auto;
-    padding: 0.5rem 0;
+    padding: 1rem;
   }
 
   .history-item {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border);
+    padding: 1.5rem;
+    border: 2px solid var(--gray-200);
+    border-radius: 16px;
+    margin-bottom: 1rem;
     cursor: pointer;
-    transition: background 0.1s;
+    transition: all 0.3s;
+    background: var(--white);
   }
 
-  .history-item:hover { background: var(--surface-2); }
+  .history-item:hover {
+    border-color: var(--orange);
+    transform: translateX(-5px);
+  }
 
   .history-meta {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.75rem;
   }
 
   .history-platform {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--orange);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
   .history-time {
-    font-size: 0.7rem;
-    color: var(--muted);
+    font-size: 0.75rem;
+    color: var(--gray-500);
   }
 
   .history-preview {
-    font-size: 0.8rem;
-    color: var(--muted);
-    white-space: nowrap;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .history-empty {
-    padding: 3rem 1.5rem;
-    font-size: 0.85rem;
-    color: var(--muted);
+    padding: 4rem 2rem;
     text-align: center;
+    color: var(--gray-500);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .dashboard-main {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-card {
+      padding: 3rem;
+    }
   }
 
   @media (max-width: 768px) {
-    main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; height: auto; }
-    .panel-left { border-right: none; border-bottom: 1px solid var(--border); }
-    header { padding: 1rem; }
-    .panel { padding: 1.25rem; }
-    .auth-card { padding: 1.5rem; margin: 1rem; }
-    .history-drawer { width: 100%; right: -100%; }
+    .hero-card {
+      padding: 2rem;
+      border-radius: 32px;
+    }
+
+    .input-card, .output-card {
+      padding: 2rem;
+      border-radius: 24px;
+    }
+
+    .dashboard {
+      padding: 1rem;
+    }
+
+    .dashboard-header {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .history-drawer {
+      width: 100%;
+      right: -100%;
+    }
+
+    .platform-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Auth Container -->
-<div class="auth-container" id="authContainer">
-  <div class="auth-card">
-    <div class="auth-logo"><span>repurpose</span></div>
-    <p class="auth-subtitle">Transform your content for any platform</p>
+<!-- Landing Page -->
+<div class="landing-page" id="landingPage">
+  <section class="hero-section">
+    <div class="hero-card">
+      <span class="hero-badge"> AI-Powered Platform</span>
+      
+      <h1 class="hero-title">
+        Transform Your Content<br>
+        For Every Platform.
+      </h1>
+      
+      <p class="hero-subtitle">
+        Repurpose your long-form content into perfectly optimized posts for Twitter, LinkedIn, Instagram, and more. Save hours with intelligent AI adaptation.
+      </p>
+      
+      <div class="hero-buttons">
+        <button class="btn btn-primary" id="heroGetStarted">
+          Start Free Trial
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <button class="btn btn-secondary" id="heroLearnMore">
+          See How It Works
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="features-container">
+      <h2 class="section-title">Everything You Need</h2>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Lightning Fast</h3>
+          <p class="feature-desc">Transform your content in seconds with our advanced AI engine.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">Platform Optimized</h3>
+          <p class="feature-desc">Automatically adapt tone, length, and style for each platform.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3 class="feature-title">Your Voice</h3>
+          <p class="feature-desc">Preserve your unique style while adapting the format.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="auth-modal">
+    <button class="auth-close" id="authClose">×</button>
+    
+    <div class="auth-header">
+      <div class="auth-logo">repurpose</div>
+      <p class="auth-subtitle">Start transforming your content today</p>
+    </div>
 
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Sign In</button>
-      <button class="auth-tab" data-tab="register">Create Account</button>
+      <button class="auth-tab" data-tab="register">Sign Up</button>
     </div>
 
     <div class="auth-error" id="authError"></div>
 
-    <!-- Login Form -->
     <form id="loginForm">
       <div class="form-group">
         <label class="form-label">Email</label>
@@ -550,7 +1025,6 @@
       <button type="submit" class="auth-btn" id="loginBtn">Sign In</button>
     </form>
 
-    <!-- Register Form -->
     <form id="registerForm" style="display:none;">
       <div class="form-group">
         <label class="form-label">Email</label>
@@ -590,59 +1064,127 @@
   </div>
 </div>
 
-<!-- App Container -->
-<div class="app-container" id="appContainer">
-  <header>
-    <span class="header-logo">repurpose</span>
-    <div class="header-divider"></div>
-    <span class="header-user" id="userEmail"></span>
-    <div class="header-actions">
-      <button class="header-btn" id="historyBtn">History</button>
-      <button class="header-btn logout" id="logoutBtn">Sign Out</button>
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+  <header class="dashboard-header">
+    <div class="dashboard-logo">repurpose</div>
+    <div class="dashboard-info">
+      <div class="dashboard-user" id="userEmail"></div>
+      <div class="dashboard-actions">
+        <button class="dashboard-btn" id="historyBtn">History</button>
+        <button class="dashboard-btn logout" id="logoutBtn">Sign Out</button>
+      </div>
     </div>
   </header>
 
   <!-- History Drawer -->
   <div class="history-drawer" id="historyDrawer">
     <div class="history-header">
-      <span>Generation History</span>
-      <button class="history-close" id="historyClose">&times;</button>
+      <h3>History</h3>
+      <button class="history-close" id="historyClose">×</button>
     </div>
     <div class="history-list" id="historyList">
       <div class="history-empty">Loading...</div>
     </div>
   </div>
 
-  <main>
-    <div class="panel panel-left">
-      <label class="panel-label">Source Content</label>
-      <textarea id="article" placeholder="Paste your article or content here..."></textarea>
+  <main class="dashboard-main">
+    <!-- Input Card -->
+    <div class="input-card">
+      <div class="card-header">
+        <h2 class="card-title">Source Content</h2>
+        <div class="char-counter" id="charCounter">0 characters</div>
+      </div>
 
-      <div>
-        <label class="panel-label" style="display:block;margin-bottom:0.75rem;">Target Platform</label>
+      <div class="quick-actions">
+        <button class="quick-btn" id="clearBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+          </svg>
+          Clear
+        </button>
+        <button class="quick-btn" id="sampleBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          Try Sample
+        </button>
+        <button class="quick-btn" id="pasteBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+          </svg>
+          Paste
+        </button>
+      </div>
+
+      <textarea id="article" placeholder="Paste your article, blog post, or long-form content here...
+
+💡 Works best with 200-2000 words
+📝 Supports articles, blog posts, essays
+⌨️ Press Ctrl+Enter to transform"></textarea>
+
+      <div class="platform-section">
+        <h3 class="section-label">Select Platform</h3>
         <div class="platform-grid">
-          <button class="platform-btn active" data-platform="twitter">Twitter</button>
-          <button class="platform-btn" data-platform="linkedin">LinkedIn</button>
-          <button class="platform-btn" data-platform="instagram">Instagram</button>
-          <button class="platform-btn" data-platform="newsletter">Newsletter</button>
-          <button class="platform-btn" data-platform="medium">Medium</button>
+          <button class="platform-btn active" data-platform="twitter" data-info="280 characters, casual tone">
+            <span class="icon">🐦</span>
+            <span>Twitter</span>
+          </button>
+          <button class="platform-btn" data-platform="linkedin" data-info="Professional, 1300 chars">
+            <span class="icon">💼</span>
+            <span>LinkedIn</span>
+          </button>
+          <button class="platform-btn" data-platform="instagram" data-info="Visual focus, hashtags">
+            <span class="icon">📸</span>
+            <span>Instagram</span>
+          </button>
+          <button class="platform-btn" data-platform="newsletter" data-info="Email format">
+            <span class="icon">✉️</span>
+            <span>Newsletter</span>
+          </button>
+          <button class="platform-btn" data-platform="medium" data-info="Long-form story">
+            <span class="icon">📝</span>
+            <span>Medium</span>
+          </button>
         </div>
+        <p class="platform-info" id="platformInfo">280 characters, casual tone</p>
       </div>
 
       <button class="submit-btn" id="submitBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
+          <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
         </svg>
-        Repurpose Content
+        Transform Content
       </button>
     </div>
 
-    <div class="panel panel-right">
+    <!-- Output Card -->
+    <div class="output-card">
       <div class="output-header">
-        <label class="panel-label">Output</label>
-        <button class="copy-btn" id="copyBtn" style="display:none;">Copy</button>
+        <h2 class="output-title">Result</h2>
+        <div class="output-actions">
+          <button class="output-btn" id="copyBtn" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copy
+          </button>
+          <button class="output-btn" id="downloadBtn" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Download
+          </button>
+        </div>
       </div>
-      <div class="output-area empty" id="output">Awaiting input...</div>
+
+      <div class="output-area empty" id="output">
+        <div class="empty-icon">✨</div>
+        <div class="empty-text">Your transformed content will appear here</div>
+      </div>
+
+      <div id="outputStats" style="display:none;"></div>
     </div>
   </main>
 </div>
@@ -654,18 +1196,28 @@
   let selectedPlatform = 'twitter';
   let outputContent = '';
 
-  // ── Auth ──────────────────────────────────────────────────
-  function showApp() {
-    document.getElementById('authContainer').classList.add('hidden');
-    document.getElementById('appContainer').classList.add('active');
+  // Page transitions
+  function showDashboard() {
+    document.getElementById('landingPage').classList.add('hidden');
+    document.getElementById('dashboard').classList.add('active');
     document.getElementById('userEmail').textContent = userEmail;
   }
 
-  function showAuth() {
-    document.getElementById('authContainer').classList.remove('hidden');
-    document.getElementById('appContainer').classList.remove('active');
+  function showLanding() {
+    document.getElementById('landingPage').classList.remove('hidden');
+    document.getElementById('dashboard').classList.remove('active');
   }
 
+  function openAuthModal() {
+    document.getElementById('authModal').classList.add('active');
+  }
+
+  function closeAuthModal() {
+    document.getElementById('authModal').classList.remove('active');
+    hideError();
+  }
+
+  // Auth
   function showError(msg) {
     const err = document.getElementById('authError');
     err.textContent = msg;
@@ -676,7 +1228,16 @@
     document.getElementById('authError').style.display = 'none';
   }
 
-  // Tab switching
+  document.getElementById('heroGetStarted').addEventListener('click', openAuthModal);
+  document.getElementById('heroLearnMore').addEventListener('click', () => {
+    document.querySelector('.features-section').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('authClose').addEventListener('click', closeAuthModal);
+  document.getElementById('authModal').addEventListener('click', (e) => {
+    if (e.target.id === 'authModal') closeAuthModal();
+  });
+
   document.querySelectorAll('.auth-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -692,7 +1253,7 @@
     });
   });
 
-  // Password strength checker
+  // Password strength
   const registerPassword = document.getElementById('registerPassword');
   registerPassword.addEventListener('input', async () => {
     const pwd = registerPassword.value;
@@ -762,7 +1323,8 @@
       userEmail = data.email;
       localStorage.setItem('token', token);
       localStorage.setItem('userEmail', userEmail);
-      showApp();
+      closeAuthModal();
+      showDashboard();
     } catch (err) {
       showError(err.message);
     } finally {
@@ -799,7 +1361,8 @@
       userEmail = data.email;
       localStorage.setItem('token', token);
       localStorage.setItem('userEmail', userEmail);
-      showApp();
+      closeAuthModal();
+      showDashboard();
     } catch (err) {
       showError(err.message);
     } finally {
@@ -814,91 +1377,233 @@
     userEmail = null;
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
-    showAuth();
+    showLanding();
   });
 
-  // Check if logged in
   if (token && userEmail) {
-    showApp();
+    showDashboard();
   }
 
-  // ── Platform Selection ────────────────────────────────────
-  document.querySelectorAll('.platform-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedPlatform = btn.dataset.platform;
+  // Dashboard
+  function initDashboard() {
+    const articleTextarea = document.getElementById('article');
+    const charCounter = document.getElementById('charCounter');
+    
+    if (!articleTextarea || !charCounter) return;
+    
+    function updateCharCounter() {
+      const count = articleTextarea.value.length;
+      charCounter.textContent = `${count.toLocaleString()} characters`;
+      
+      charCounter.classList.remove('warning', 'error');
+      if (count > 8000) charCounter.classList.add('error');
+      else if (count > 5000) charCounter.classList.add('warning');
+    }
+    
+    articleTextarea.addEventListener('input', updateCharCounter);
+
+    document.getElementById('clearBtn')?.addEventListener('click', () => {
+      articleTextarea.value = '';
+      updateCharCounter();
+      articleTextarea.focus();
     });
-  });
 
-  // ── Submit ────────────────────────────────────────────────
-  document.getElementById('submitBtn').addEventListener('click', async () => {
-    const article = document.getElementById('article').value.trim();
-    if (!article) return;
+    document.getElementById('sampleBtn')?.addEventListener('click', () => {
+      const samples = [
+        `In the rapidly evolving landscape of artificial intelligence, we're witnessing unprecedented breakthroughs that are reshaping how we work, create, and innovate. From advanced language models that can understand context with remarkable nuance to generative AI systems that can create stunning visuals and complex code, the technology is pushing boundaries we once thought were decades away.
 
-    const output = document.getElementById('output');
-    const btn = document.getElementById('submitBtn');
-    const copyBtn = document.getElementById('copyBtn');
+What makes this moment particularly exciting is the democratization of these tools. Small teams and individual creators now have access to capabilities that were once the exclusive domain of large tech companies with massive resources. This shift is fostering innovation across industries, from healthcare and education to entertainment and scientific research.
 
-    btn.disabled = true;
-    copyBtn.style.display = 'none';
-    output.className = 'output-area';
-    output.innerHTML = `<div class="loading"><div class="spinner"></div><span>Generating content...</span></div>`;
+However, with great power comes great responsibility. As we integrate AI more deeply into our daily lives, we must address critical questions about ethics, bias, privacy, and the future of work. The conversation shouldn't be about whether AI will transform our world—it already has—but rather how we can guide that transformation to benefit humanity as a whole.`
+      ];
+      
+      articleTextarea.value = samples[0];
+      updateCharCounter();
+      articleTextarea.focus();
+    });
 
-    try {
-      const res = await fetch(`${API_URL}/repurpose`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ article, platform: selectedPlatform })
+    document.getElementById('pasteBtn')?.addEventListener('click', async () => {
+      try {
+        const text = await navigator.clipboard.readText();
+        articleTextarea.value = text;
+        updateCharCounter();
+        articleTextarea.focus();
+      } catch (err) {
+        alert('Failed to paste. Please use Ctrl+V instead.');
+      }
+    });
+
+    const platformInfo = document.getElementById('platformInfo');
+    document.querySelectorAll('.platform-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedPlatform = btn.dataset.platform;
+        if (platformInfo) platformInfo.textContent = btn.dataset.info;
       });
-
-      if (res.status === 401) {
-        showAuth();
-        throw new Error('Session expired. Please sign in again.');
-      }
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || `HTTP ${res.status}`);
-      }
-
-      const data = await res.json();
-      outputContent = data.repurposed_content;
-      output.className = 'output-area';
-      output.textContent = outputContent;
-      copyBtn.style.display = 'block';
-
-    } catch (err) {
-      output.className = 'output-area';
-      output.innerHTML = `<span style="color:var(--error)">Error: ${err.message}</span>`;
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  // ── Copy ──────────────────────────────────────────────────
-  document.getElementById('copyBtn').addEventListener('click', function() {
-    navigator.clipboard.writeText(outputContent).then(() => {
-      this.textContent = 'Copied!';
-      this.classList.add('copied');
-      setTimeout(() => {
-        this.textContent = 'Copy';
-        this.classList.remove('copied');
-      }, 1500);
     });
-  });
 
-  // Ctrl+Enter shortcut
-  document.getElementById('article').addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-      document.getElementById('submitBtn').click();
+    const submitBtn = document.getElementById('submitBtn');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', async () => {
+        const article = articleTextarea.value.trim();
+        if (!article) {
+          articleTextarea.classList.add('shake');
+          articleTextarea.focus();
+          articleTextarea.style.borderColor = '#ef4444';
+          
+          const output = document.getElementById('output');
+          output.innerHTML = `
+            <div class="empty-icon">📝</div>
+            <div class="empty-text" style="color: #ef4444;">
+              <strong>Please add content first!</strong><br>
+              <small>Click "Try Sample" or paste your content</small>
+            </div>
+          `;
+          
+          setTimeout(() => {
+            articleTextarea.classList.remove('shake');
+            articleTextarea.style.borderColor = '';
+            output.innerHTML = `
+              <div class="empty-icon">✨</div>
+              <div class="empty-text">Your transformed content will appear here</div>
+            `;
+          }, 2000);
+          
+          return;
+        }
+
+        const output = document.getElementById('output');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const outputStats = document.getElementById('outputStats');
+
+        submitBtn.disabled = true;
+        if (copyBtn) copyBtn.style.display = 'none';
+        if (downloadBtn) downloadBtn.style.display = 'none';
+        if (outputStats) outputStats.style.display = 'none';
+        output.className = 'output-area';
+        output.innerHTML = `<div class="loading"><div class="spinner"></div><span>Transforming...</span></div>`;
+
+        const startTime = Date.now();
+
+        try {
+          const res = await fetch(`${API_URL}/repurpose`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ article, platform: selectedPlatform })
+          });
+
+          if (res.status === 401) {
+            showLanding();
+            openAuthModal();
+            throw new Error('Session expired');
+          }
+
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.detail || `HTTP ${res.status}`);
+          }
+
+          const data = await res.json();
+          outputContent = data.repurposed_content;
+          const processingTime = ((Date.now() - startTime) / 1000).toFixed(1);
+          
+          output.className = 'output-area';
+          output.textContent = outputContent;
+          if (copyBtn) copyBtn.style.display = 'flex';
+          if (downloadBtn) downloadBtn.style.display = 'flex';
+
+          const wordCount = outputContent.split(/\s+/).filter(w => w.length > 0).length;
+          const charCount = outputContent.length;
+          
+          if (outputStats) {
+            outputStats.innerHTML = `
+              <div class="output-stats">
+                <div class="stat">
+                  <div class="stat-label">Words</div>
+                  <div class="stat-value">${wordCount.toLocaleString()}</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Characters</div>
+                  <div class="stat-value">${charCount.toLocaleString()}</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Time</div>
+                  <div class="stat-value">${processingTime}s</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Platform</div>
+                  <div class="stat-value" style="text-transform:capitalize;">${selectedPlatform}</div>
+                </div>
+              </div>
+            `;
+            outputStats.style.display = 'block';
+          }
+
+        } catch (err) {
+          output.className = 'output-area';
+          output.innerHTML = `
+            <div class="empty-icon">⚠️</div>
+            <div class="empty-text" style="color: #ef4444;">
+              <strong>Error</strong><br>
+              <small>${err.message}</small>
+            </div>
+          `;
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
     }
-  });
 
-  // ── History ───────────────────────────────────────────────
+    document.getElementById('copyBtn')?.addEventListener('click', function() {
+      navigator.clipboard.writeText(outputContent).then(() => {
+        const originalHTML = this.innerHTML;
+        this.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Copied!
+        `;
+        this.classList.add('copied');
+        setTimeout(() => {
+          this.innerHTML = originalHTML;
+          this.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        alert('Failed to copy');
+      });
+    });
+
+    document.getElementById('downloadBtn')?.addEventListener('click', function() {
+      try {
+        const blob = new Blob([outputContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `repurposed-${selectedPlatform}-${Date.now()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert('Failed to download');
+      }
+    });
+
+    articleTextarea.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        submitBtn?.click();
+      }
+    });
+  }
+
+  initDashboard();
+
+  // History
   const historyDrawer = document.getElementById('historyDrawer');
   const historyList = document.getElementById('historyList');
 
@@ -915,7 +1620,8 @@
       });
 
       if (res.status === 401) {
-        showAuth();
+        showLanding();
+        openAuthModal();
         return;
       }
 
@@ -931,7 +1637,7 @@
             <span class="history-platform">${item.platform}</span>
             <span class="history-time">${formatTime(item.created_at)}</span>
           </div>
-          <div class="history-preview">${escapeHtml(item.input_text.slice(0, 80))}...</div>
+          <div class="history-preview">${escapeHtml(item.input_text.slice(0, 100))}...</div>
         </div>
       `).join('');
 
@@ -941,12 +1647,12 @@
           outputContent = el.dataset.output;
           output.className = 'output-area';
           output.textContent = outputContent;
-          document.getElementById('copyBtn').style.display = 'block';
+          document.getElementById('copyBtn').style.display = 'flex';
           historyDrawer.classList.remove('open');
         });
       });
     } catch (e) {
-      historyList.innerHTML = '<div class="history-empty">Failed to load history</div>';
+      historyList.innerHTML = '<div class="history-empty">Failed to load</div>';
     }
   }
 
