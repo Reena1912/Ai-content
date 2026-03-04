@@ -12,6 +12,7 @@ from groq import Groq
 import bcrypt
 import re
 from jose import jwt, JWTError
+from fastapi.staticfiles import StaticFiles 
 
 # Load environment variables
 load_dotenv()
