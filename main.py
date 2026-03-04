@@ -18,6 +18,7 @@ load_dotenv()
 
 app = FastAPI()
 security = HTTPBearer()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # JWT settings
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
