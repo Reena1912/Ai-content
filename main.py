@@ -281,9 +281,10 @@ class ArticleRequest(BaseModel):
     platform: Literal["twitter", "linkedin", "instagram", "newsletter", "medium"] = "twitter"
 
 
-@app.get("/")
-def root():
-    return {"message": "API running 🚀"}
+@app.get("/", response_class=HTMLResponse)
+async def home():
+    with open("static/index.html", "r", encoding="utf-8") as f:
+        return f.read()
 
 
 def repurpose_content(article: str, platform: str):
